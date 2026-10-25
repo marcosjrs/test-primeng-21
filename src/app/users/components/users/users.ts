@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal, viewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { Tag } from 'primeng/tag';
 import { Button } from 'primeng/button';
@@ -17,6 +18,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 })
 export class UsersComponent {
   readonly #usersService = inject(UsersService);
+  readonly #router = inject(Router);
   private readonly confirmDialog = viewChild<ConfirmDialogComponent<User>>(ConfirmDialogComponent);
 
   protected readonly users = this.#usersService.users;
@@ -51,7 +53,7 @@ export class UsersComponent {
   }
 
   protected editUser(user: User): void {
-    console.log('Editar usuario:', user);
+    this.#router.navigate(['/users', user.id, 'edit']);
   }
 
   protected requestDelete(user: User): void {

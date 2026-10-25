@@ -1,0 +1,82 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="user-form">
+  <div class="form-grid">
+    <div class="form-field">
+      <label for="name">Nombre completo *</label>
+      <input
+        pInputText
+        id="name"
+        formControlName="name"
+        placeholder="Ej. Juan Pérez"
+        [invalid]="form.controls.name.invalid && form.controls.name.touched"
+      />
+      @if (form.controls.name.invalid && form.controls.name.touched) {
+        <p-message severity="error" size="small" variant="simple">
+          El nombre es requerido (mínimo 2 caracteres).
+        </p-message>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="email">Correo electrónico *</label>
+      <input
+        pInputText
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="Ej. juan@example.com"
+        [invalid]="form.controls.email.invalid && form.controls.email.touched"
+      />
+      @if (form.controls.email.invalid && form.controls.email.touched) {
+        <p-message severity="error" size="small" variant="simple">
+          Ingresa un correo electrónico válido.
+        </p-message>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="role">Puesto / Rol *</label>
+      <input
+        pInputText
+        id="role"
+        formControlName="role"
+        placeholder="Ej. Desarrollador Frontend"
+        [invalid]="form.controls.role.invalid && form.controls.role.touched"
+      />
+      @if (form.controls.role.invalid && form.controls.role.touched) {
+        <p-message severity="error" size="small" variant="simple">
+          El rol o puesto es obligatorio.
+        </p-message>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="status">Estado *</label>
+      <p-select
+        inputId="status"
+        formControlName="status"
+        [options]="statusOptions"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Selecciona un estado"
+        styleClass="w-full"
+      />
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <p-button
+      type="button"
+      label="Cancelar"
+      icon="pi pi-times"
+      severity="secondary"
+      [text]="true"
+      (click)="onCancel()"
+    />
+    <p-button
+      type="submit"
+      label="Guardar cambios"
+      icon="pi pi-check"
+      [disabled]="form.invalid"
+    />
+  </div>
+</form>

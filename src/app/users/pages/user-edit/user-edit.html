@@ -1,0 +1,41 @@
+<section class="user-edit-page">
+  <header class="page-header">
+    <div class="header-titles">
+      <div class="title-row">
+        <p-button
+          icon="pi pi-arrow-left"
+          [rounded]="true"
+          [text]="true"
+          severity="secondary"
+          (click)="navigateBack()"
+          ariaLabel="Volver al listado"
+        />
+        <h1>Editar Usuario</h1>
+      </div>
+      @if (user(); as currentUser) {
+        <p>Modificando la información de <strong>{{ currentUser.name }}</strong> (ID #{{ currentUser.id }})</p>
+      }
+    </div>
+  </header>
+
+  <div class="card-wrapper">
+    @if (user()) {
+      <app-user-form
+        [user]="user()"
+        (save)="onSave($event)"
+        (cancel)="onCancel()"
+      />
+    } @else {
+      <div class="not-found-state">
+        <i class="pi pi-exclamation-circle not-found-icon"></i>
+        <h2>Usuario no encontrado</h2>
+        <p>El usuario con identificador #{{ id() }} no existe o ha sido eliminado.</p>
+        <p-button
+          label="Volver al directorio"
+          icon="pi pi-arrow-left"
+          (click)="navigateBack()"
+        />
+      </div>
+    }
+  </div>
+</section>

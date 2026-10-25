@@ -58,6 +58,16 @@ export class UsersService {
 
   readonly users = this.#users.asReadonly();
 
+  getUserById(id: number): User | undefined {
+    return this.#users().find((u) => u.id === id);
+  }
+
+  updateUser(updated: User): void {
+    this.#users.update((users) =>
+      users.map((u) => (u.id === updated.id ? updated : u))
+    );
+  }
+
   deleteUser(id: number): void {
     this.#users.update((users) => users.filter((u) => u.id !== id));
   }

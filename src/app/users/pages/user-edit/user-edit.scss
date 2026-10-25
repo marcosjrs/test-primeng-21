@@ -1,0 +1,70 @@
+.user-edit-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+
+  .page-header {
+    .header-titles {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      .title-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+
+        h1 {
+          margin: 0;
+          font-size: 1.75rem;
+          font-weight: 700;
+          color: var(--p-text-color, #0f172a);
+        }
+      }
+
+      p {
+        margin: 0;
+        padding-left: 3rem;
+        color: var(--p-text-muted-color, #64748b);
+      }
+    }
+  }
+
+  .card-wrapper {
+    background: var(--p-content-background, #ffffff);
+    border: 1px solid var(--p-content-border-color, #e2e8f0);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  }
+
+  .not-found-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    gap: 1rem;
+
+    .not-found-icon {
+      font-size: 3rem;
+      color: var(--p-text-muted-color, #94a3b8);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0;
+      color: var(--p-text-muted-color, #64748b);
+    }
+  }
+}

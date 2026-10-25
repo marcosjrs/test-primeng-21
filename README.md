@@ -72,15 +72,23 @@ src/app/
     ├── services/
     │   └── users.service.ts             # Servicio UsersService con Signals (providedIn: 'root')
     ├── components/
-    │   └── users/
-    │       ├── users.ts                 # Componente UsersComponent con OnPush e inject()
-    │       ├── users.html               # Plantilla con p-table, paginación, tags de estado y acciones
-    │       └── users.scss               # Estilos encapsulados
+    │   ├── users/
+    │   │   ├── users.ts                 # Componente UsersComponent con OnPush e inject()
+    │   │   ├── users.html               # Plantilla con p-table, paginación, tags de estado y acciones
+    │   │   └── users.scss               # Estilos encapsulados
+    │   └── user-form/
+    │       ├── user-form.ts             # Formulario reactivo de edición con validaciones y PrimeNG
+    │       ├── user-form.html           # Plantilla con pInputText, p-select y mensajes de error
+    │       └── user-form.scss           # Estilos responsivos del formulario
     └── pages/
-        └── users-list/
-            ├── users-list.ts            # Página UsersListComponent (standalone, OnPush)
-            ├── users-list.html          # Layout de la página con encabezado y <app-users />
-            └── users-list.scss          # Estilos del contenedor de la página
+        ├── users-list/
+        │   ├── users-list.ts            # Página UsersListComponent (standalone, OnPush)
+        │   ├── users-list.html          # Layout de la página con encabezado y <app-users />
+        │   └── users-list.scss          # Estilos del contenedor de la página
+        └── user-edit/
+            ├── user-edit.ts             # Página UserEditPage (obtiene id vía route input binding)
+            ├── user-edit.html           # Layout de edición con <app-user-form /> y estado not-found
+            └── user-edit.scss           # Estilos de la página de edición
 ```
 
 ## Detalle de los archivos
@@ -93,14 +101,27 @@ src/app/
 
 3. **Servicio**: `src/app/users/services/users.service.ts`
    - Expone los usuarios mediante un Signal de solo lectura: `readonly users = this.#users.asReadonly()`.
+   - Métodos: `getUserById(id)`, `updateUser(user)`, `deleteUser(id)`.
 
 4. **Componente de Tabla**: `src/app/users/components/users/users.ts` y `src/app/users/components/users/users.html`
    - Utiliza `<p-table [value]="users()" [paginator]="true" [rows]="5" ...>` de PrimeNG.
-   - Incluye badges con `<p-tag>` y menú contextual (`<p-menu>`) para editar y confirmar borrado con `<app-confirm-dialog>`.
+   - Incluye badges con `<p-tag>` y menú contextual (`<p-menu>`) para editar (navega a `/users/:id/edit`) y confirmar borrado con `<app-confirm-dialog>`.
 
-5. **Página**: `src/app/users/pages/users-list/users-list.ts` y `src/app/users/pages/users-list/users-list.html`
+5. **Componente de Formulario de Edición**: `src/app/users/components/user-form/`
+   - Formulario reactivo (`FormGroup`) con validaciones para nombre, email, rol y estado.
+   - Utiliza `pInputText`, `p-select` y `p-message` de PrimeNG.
+   - Sincroniza con el input `user()` mediante `effect()` y emite eventos `save` y `cancel`.
+
+6. **Página de Listado**: `src/app/users/pages/users-list/users-list.ts` y `src/app/users/pages/users-list/users-list.html`
    - Estructura la vista principal con título, acciones y el componente `<app-users />`.
 
-6. **Rutas**: `src/app/app.routes.ts`
-   - Se configuró la ruta `/users` con **lazy loading** (`loadComponent`) y redirección por defecto desde la raíz (`''` -> `'users'`).
+7. **Página de Edición**: `src/app/users/pages/user-edit/user-edit.ts` y `src/app/users/pages/user-edit/user-edit.html`
+   - Captura el parámetro de ruta `id` mediante `withComponentInputBinding()`.
+   - Deriva el usuario reactivamente con `computed()` y enlaza el formulario `<app-user-form />`.
+
+8. **Rutas**: `src/app/app.routes.ts`
+   - Se configuraron las rutas con **lazy loading** (`loadComponent`):
+     - `/users`: Listado de usuarios.
+     - `/users/:id/edit`: Edición del usuario por ID.
+     - Redirección por defecto desde la raíz (`''` -> `'users'`).
 
