@@ -6,7 +6,7 @@ import { Menu } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { UsersService } from '../../services/users.service';
 import { User, UserStatus } from '../../models/user.model';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-users',
