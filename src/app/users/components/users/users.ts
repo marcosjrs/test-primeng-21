@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, viewChild } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { Tag } from 'primeng/tag';
 import { Button } from 'primeng/button';
@@ -6,16 +6,19 @@ import { Menu } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { UsersService } from '../../services/users.service';
 import { User, UserStatus } from '../../models/user.model';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-users',
-  imports: [TableModule, Tag, Button, Menu],
+  imports: [TableModule, Tag, Button, Menu, ConfirmDialogComponent],
   templateUrl: './users.html',
   styleUrl: './users.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersComponent {
   readonly #usersService = inject(UsersService);
+  private readonly confirmDialog = viewChild(ConfirmDialogComponent);
+
   protected readonly users = this.#usersService.users;
   protected readonly selectedUser = signal<User | null>(null);
 
@@ -36,7 +39,7 @@ export class UsersComponent {
       command: () => {
         const user = this.selectedUser();
         if (user) {
-          this.deleteUser(user);
+          this.requestDelete(user);
         }
       }
     }
@@ -49,6 +52,10 @@ export class UsersComponent {
 
   protected editUser(user: User): void {
     console.log('Editar usuario:', user);
+  }
+
+  protected requestDelete(user: User): void {
+    this.confirmDialog()?.confirm(user);
   }
 
   protected deleteUser(user: User): void {

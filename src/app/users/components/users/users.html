@@ -1,5 +1,6 @@
 <div class="users-table-container">
   <p-menu #rowMenu [model]="actionMenuItems" [popup]="true" appendTo="body" />
+  <app-confirm-dialog (confirmed)="deleteUser($event)" />
 
   <p-table
     [value]="users()"
