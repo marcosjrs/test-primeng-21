@@ -1,0 +1,31 @@
+.users-table-container {
+  width: 100%;
+
+  .table-caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+
+    .caption-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--p-text-color, #1e293b);
+    }
+
+    .caption-count {
+      font-size: 0.875rem;
+      color: var(--p-text-muted-color, #64748b);
+    }
+  }
+
+  .user-name {
+    font-weight: 600;
+    color: var(--p-text-color, #0f172a);
+  }
+
+  .user-role {
+    font-size: 0.9rem;
+    color: var(--p-text-muted-color, #475569);
+  }
+}

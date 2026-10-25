@@ -1,0 +1,56 @@
+<div class="users-table-container">
+  <p-table
+    [value]="users()"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    stripedRows
+    responsiveLayout="scroll"
+  >
+    <ng-template #caption>
+      <div class="table-caption">
+        <span class="caption-title">Directorio de Usuarios</span>
+        <span class="caption-count">{{ users().length }} usuarios registrados</span>
+      </div>
+    </ng-template>
+
+    <ng-template #header>
+      <tr>
+        <th style="width: 5rem">ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Estado</th>
+        <th>Fecha de Alta</th>
+        <th style="width: 6rem; text-align: center">Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-user>
+      <tr>
+        <td>#{{ user.id }}</td>
+        <td>
+          <span class="user-name">{{ user.name }}</span>
+        </td>
+        <td>{{ user.email }}</td>
+        <td>
+          <span class="user-role">{{ user.role }}</span>
+        </td>
+        <td>
+          <p-tag [value]="user.status" [severity]="getSeverity(user.status)" />
+        </td>
+        <td>{{ user.joinDate }}</td>
+        <td style="text-align: center">
+          <p-button icon="pi pi-ellipsis-v" [rounded]="true" [text]="true" severity="secondary" size="small" />
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="7" class="text-center py-4">No se encontraron usuarios.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
