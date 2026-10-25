@@ -1,4 +1,6 @@
 <div class="users-table-container">
+  <p-menu #rowMenu [model]="actionMenuItems" [popup]="true" appendTo="body" />
+
   <p-table
     [value]="users()"
     [paginator]="true"
@@ -42,7 +44,14 @@
         </td>
         <td>{{ user.joinDate }}</td>
         <td style="text-align: center">
-          <p-button icon="pi pi-ellipsis-v" [rounded]="true" [text]="true" severity="secondary" size="small" />
+          <p-button
+            icon="pi pi-ellipsis-v"
+            [rounded]="true"
+            [text]="true"
+            severity="secondary"
+            size="small"
+            (click)="openRowMenu($event, rowMenu, user)"
+          />
         </td>
       </tr>
     </ng-template>
