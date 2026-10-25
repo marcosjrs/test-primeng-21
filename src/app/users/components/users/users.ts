@@ -17,7 +17,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
 })
 export class UsersComponent {
   readonly #usersService = inject(UsersService);
-  private readonly confirmDialog = viewChild(ConfirmDialogComponent);
+  private readonly confirmDialog = viewChild<ConfirmDialogComponent<User>>(ConfirmDialogComponent);
 
   protected readonly users = this.#usersService.users;
   protected readonly selectedUser = signal<User | null>(null);
@@ -55,11 +55,18 @@ export class UsersComponent {
   }
 
   protected requestDelete(user: User): void {
-    this.confirmDialog()?.confirm(user);
+    this.confirmDialog()?.confirm(user, {
+      header: 'Confirmar eliminación',
+      message: `¿Estás seguro de que deseas eliminar al usuario "${user.name}"? Esta acción no se puede deshacer.`,
+      acceptLabel: 'Sí, eliminar',
+      acceptSeverity: 'danger'
+    });
   }
 
-  protected deleteUser(user: User): void {
-    this.#usersService.deleteUser(user.id);
+  protected deleteUser(user: User | unknown): void {
+    if (user && typeof user === 'object' && 'id' in user) {
+      this.#usersService.deleteUser((user as User).id);
+    }
   }
 
   protected getSeverity(status: UserStatus): 'success' | 'warn' | 'danger' {
