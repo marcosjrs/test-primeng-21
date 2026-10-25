@@ -28,4 +28,9 @@
     font-size: 0.9rem;
     color: var(--p-text-muted-color, #475569);
   }
+
+  p-table {
+    /*Ejemplo de como modificar el color de fondo del header de la tabla*/
+    --p-datatable-header-background: var(--p-primary-50);
+  }
 }
