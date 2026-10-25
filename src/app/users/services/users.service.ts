@@ -57,4 +57,8 @@ export class UsersService {
   ]);
 
   readonly users = this.#users.asReadonly();
+
+  deleteUser(id: number): void {
+    this.#users.update((users) => users.filter((u) => u.id !== id));
+  }
 }
